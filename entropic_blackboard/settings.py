@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "hello",
+
+    "blackboard",
 ]
 
 MIDDLEWARE = [
@@ -107,5 +108,9 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
+
+
+LOGIN_REDIRECT_URL = "atrium"
+
 
 django_heroku.settings(locals())
