@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h3>Logged events</h3>
+    {% for event in logged_events %}
+        <p>{{ event }}</p>
+    {% endfor %}
+{% endblock %}

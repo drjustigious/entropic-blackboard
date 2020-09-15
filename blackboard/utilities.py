@@ -10,23 +10,23 @@ class BlackboardLogger:
     events to the database.
     """
 
-    @classmethod
+    @staticmethod
     def debug(message, user=None):
-        log(message, user, LoggedEvent.LogSeverityLevel.DEBUG)
+        BlackboardLogger.log(message, user, LoggedEvent.LogSeverityLevel.DEBUG)
 
-    @classmethod
+    @staticmethod
     def info(message, user=None):
-        log(message, user, LoggedEvent.LogSeverityLevel.INFO)
+        BlackboardLogger.log(message, user, LoggedEvent.LogSeverityLevel.INFO)
 
-    @classmethod
+    @staticmethod
     def warning(message, user=None):
-        log(message, user, LoggedEvent.LogSeverityLevel.WARNING)
+        BlackboardLogger.log(message, user, LoggedEvent.LogSeverityLevel.WARNING)
 
-    @classmethod
+    @staticmethod
     def error(message, user=None):
-        log(message, user, LoggedEvent.LogSeverityLevel.ERROR)
+        BlackboardLogger.log(message, user, LoggedEvent.LogSeverityLevel.ERROR)
 
-    @classmethod
+    @staticmethod
     def log(message, user, severity):
         log_event = LoggedEvent()
         log_event.message = message
@@ -34,15 +34,17 @@ class BlackboardLogger:
         log_event.severity = severity
         log_event.save()
 
-        remove_old_log_entries(settings.DAYS_TO_KEEP_LOGGED_EVENTS)
+        print(log_event)
 
-    @classmethods
+        BlackboardLogger.remove_old_log_entries(settings.DAYS_TO_KEEP_LOGGED_EVENTS)
+
+    @staticmethod
     def remove_old_log_entries(days_to_keep):
         """
         Remove all logged events that are older than
         'days_to_keep' days from the database.
         """
-        now_utc = datetime.datetime.utcnow()
+        now_utc = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
         delete_before_date = now_utc - datetime.timedelta(days=days_to_keep)
 
         events_to_delete = LoggedEvent.objects.filter(
@@ -51,4 +53,7 @@ class BlackboardLogger:
 
         num_events_to_delete = len(events_to_delete)
         events_to_delete.delete()
-        print("Deleted {} old logged events.".format(num_events_to_delete))
+        print("Deleted {} logged events older than {}.".format(
+            num_events_to_delete,
+            delete_before_date
+        ))
