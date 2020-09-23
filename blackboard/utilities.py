@@ -36,24 +36,15 @@ class BlackboardLogger:
 
         print(log_event)
 
-        BlackboardLogger.remove_old_log_entries(settings.DAYS_TO_KEEP_LOGGED_EVENTS)
+        BlackboardLogger.remove_old_log_entries(settings.NUM_LOGGED_EVENTS_TO_KEEP)
 
     @staticmethod
-    def remove_old_log_entries(days_to_keep):
+    def remove_old_log_entries(num_events_to_keep):
         """
-        Remove all logged events that are older than
-        'days_to_keep' days from the database.
+        Remove old logged events so that at most
+        'num_events_to_keep' remain in the database.
         """
-        now_utc = datetime.datetime.utcnow().replace(tzinfo=pytz.utc)
-        delete_before_date = now_utc - datetime.timedelta(days=days_to_keep)
+        events_to_keep = LoggedEvent.objects.all().order_by('-time')[:num_events_to_keep]
+        events_to_delete = LoggedEvent.objects.all().exclude(pk__in=events_to_keep)
 
-        events_to_delete = LoggedEvent.objects.filter(
-            time__lt=delete_before_date
-        )
-
-        num_events_to_delete = len(events_to_delete)
         events_to_delete.delete()
-        print("Deleted {} logged events older than {}.".format(
-            num_events_to_delete,
-            delete_before_date
-        ))

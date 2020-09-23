@@ -112,7 +112,7 @@ STATIC_URL = "/static/"
 
 LOGIN_REDIRECT_URL = "atrium"
 
-DAYS_TO_KEEP_LOGGED_EVENTS = 30
+NUM_LOGGED_EVENTS_TO_KEEP = 1000
 
 
 django_heroku.settings(locals())
