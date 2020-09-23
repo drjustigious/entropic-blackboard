@@ -38,7 +38,9 @@ class Blackboard(models.Model):
 
     @staticmethod
     def get_boards_available_to_user(user):
-        available_boards = BlackboardMembership.objects.filter(user=user).values_list('board', flat=True)
+        available_board_pks = BlackboardMembership.objects.filter(user=user).values_list('board', flat=True)
+        available_boards = Blackboard.objects.filter(pk__in=available_board_pks)
+        
         return available_boards
 
     def __str__(self):

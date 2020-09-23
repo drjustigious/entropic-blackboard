@@ -2,5 +2,16 @@
 {% load static %}
 
 {% block content %}
-    <p>perms: {{ perms.blackboard }}</p>
+    <h1>Blackboards</h1>
+    <ul>
+        {% for board in blackboards %}
+        <li>
+            <a href="{% url 'blackboard' board.uuid %}">
+                <b>{{ board.name }}</b> ({{ board.uuid }})
+            </a>
+            <p>Created: {{ board.created }}</p>
+            <p>{{ board.description }}</p>
+        </li>
+        {% endfor %}
+    </ul>
 {% endblock %}

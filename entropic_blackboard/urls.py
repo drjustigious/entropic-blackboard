@@ -9,6 +9,7 @@ import blackboard.views
 
 urlpatterns = [
     path("", blackboard.views.atrium, name="atrium"),
+    path("blackboard/<uuid:board_uuid>/", blackboard.views.blackboard, name="blackboard"),
     path("logs/", blackboard.views.logged_events, name="logged_events"),
 
     path("admin/", admin.site.urls),

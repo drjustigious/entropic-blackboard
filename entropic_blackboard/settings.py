@@ -110,7 +110,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"
 
 
-LOGIN_REDIRECT_URL = "atrium"
+LOGIN_REDIRECT_URL = ""
+LOGIN_URL = "login/"
 
 NUM_LOGGED_EVENTS_TO_KEEP = 1000
 
