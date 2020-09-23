@@ -36,6 +36,13 @@ class Blackboard(models.Model):
     description = models.TextField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    @staticmethod
+    def get_boards_available_to_user(user):
+        available_boards = BlackboardMembership.objects.filter(user=user).values_list('board', flat=True)
+        return available_boards
+
+    def __str__(self):
+        return f"{self.name} ({self.uuid})"
 
 class BlackboardMembership(models.Model):
     """
@@ -45,3 +52,8 @@ class BlackboardMembership(models.Model):
     board = models.ForeignKey(Blackboard, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     member_since = models.DateTimeField(auto_now_add=True)
+    last_read = models.DateTimeField(null=True, blank=True, help_text="The last time the user viewed this blackboard.")
+    last_write = models.DateTimeField(null=True, blank=True, help_text="The last time the user modified this blackboard.")
+
+    def __str__(self):
+        return f"{self.user.username} @ {self.board.name} ({self.board.uuid})"

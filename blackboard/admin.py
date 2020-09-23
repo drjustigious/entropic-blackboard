@@ -5,11 +5,11 @@ from blackboard.models import (
 
 @admin.register(Blackboard)
 class BlackboardAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('uuid', 'name', 'created')
 
 @admin.register(BlackboardMembership)
 class BlackboardMembershipAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'board', 'member_since', 'last_read', 'last_write')
 
 @admin.register(LoggedEvent)
 class LoggedEventAdmin(admin.ModelAdmin):
