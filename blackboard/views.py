@@ -43,6 +43,10 @@ def blackboard(request, board_uuid):
             board_uuid,
             request.user.username if request.user else "unknown user"
         ))
+
+    # Debuggg, add these to the model at some point:
+    blackboard.width = 80
+    blackboard.height = 24
     
     context = {
         "blackboard": blackboard,
