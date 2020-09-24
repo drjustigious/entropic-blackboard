@@ -45,8 +45,8 @@ def blackboard(request, board_uuid):
         ))
 
     # Debuggg, add these to the model at some point:
-    blackboard.width = 80
-    blackboard.height = 24
+    blackboard.width = 640
+    blackboard.height = int(blackboard.width*9.0/16.0)
     
     context = {
         "blackboard": blackboard,

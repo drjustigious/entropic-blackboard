@@ -4,7 +4,7 @@
 {% block content %}
     <h1>{{ blackboard.name }}</h1>
     <p>{{ blackboard.uuid }}</p>
-    <canvas id="blackboardCanvas" width="{{ blackboard.width }}" height="{{ blackboard.height }}"></canvas> 
+    <canvas class="blackboardCanvas" id="blackboardCanvas" width="{{ blackboard.width }}" height="{{ blackboard.height }}"></canvas> 
 {% endblock %}
 
 {% block javascript %}

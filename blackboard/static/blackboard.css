@@ -1,0 +1,6 @@
+canvas {
+    border: 2px solid rgb(64, 64, 64);
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    max-width: 1024px;
+}
